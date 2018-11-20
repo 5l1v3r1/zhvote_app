@@ -16,7 +16,7 @@ library(curl)
 
 urls <- jsonlite::fromJSON("https://opendata.swiss/api/3/action/package_show?id=echtzeitdaten-am-abstimmungstag")
 
-datevote <- substr(urls$result$resources$download_url,38,47)
+datevote <- substr(urls$result$resources$download_url,39,48)
 
 # urls$result$resources$download_url[1]
 
@@ -75,7 +75,7 @@ ui <-   fluidPage(
 server <- function(input, output,session) {
 
   
-  data <- reactive({jsonlite::fromJSON(paste0( "http://www.wahlen.zh.ch/abstimmungen/",input$urlselect,"/viewer_download.php"))})
+  data <- reactive({jsonlite::fromJSON(paste0( "https://www.wahlen.zh.ch/abstimmungen/",input$urlselect,"/viewer_download.php"))})
 
 # transform nested list into dataframe
   datanew <- reactive({
@@ -140,8 +140,8 @@ observe({
                               scale_x_continuous(limits = c(0, 100),breaks=seq(0,100,10))+
                               annotate("rect", xmin=50, xmax=100, ymin=0, ymax=Inf,fill="steelblue",alpha=0.3)+
                               annotate("rect", xmin=0, xmax=50, ymin=0, ymax=Inf,fill="coral",alpha=0.3)+
-                              annotate("text", x=90,y=70,label = "bold(JA)", colour = "white",parse = TRUE,size = 10)+
-                              annotate("text", x=10,y=70,label = "bold(NEIN)", colour = "white",parse = TRUE,size = 10)+
+                              annotate("text", x=80,y=70,label = "bold(JA)", colour = "white",parse = TRUE,size = 9)+
+                              annotate("text", x=20,y=70,label = "bold(NEIN)", colour = "white",parse = TRUE,size = 9)+
                               labs(x="Ja-Anteil (%)",y="Anzahl Gemeinden"), 
                               width = "auto", height = "auto", res = 72)
   
