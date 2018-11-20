@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1542119412207.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1122116462",
+    "id" : "F8ACE452",
+    "lastKnownWriteTime" : 1542120769,
+    "last_content_update" : 1542120769549,
+    "path" : "L:/STAT/08_DS/06_Diffusion/Anlässe/UZH_Lunchveranstaltung_opendata&R/uzh_ogd-r/swr_zh/app.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

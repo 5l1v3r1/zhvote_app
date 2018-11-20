@@ -1,0 +1,7 @@
+"0","# install.packages(""ggridges"")"
+"0","data$VORLAGE_NAME <- factor(data$VORLAGE_NAME, labels = c(""Grüne Wirtschaft"", ""AHV Plus"", ""NDG"", ""Bezahlbare Kinderbetreuung""))"
+"0","data <-data %>% mutate_at(vars(JA_STIMMEN_ABSOLUT,NEIN_STIMMEN_ABSOLUT,JA_PROZENT,STIMMBETEILIGUNG),as.numeric)"
+"0","#aggregiere auf Gemeindeebene"
+"0","data <-data %>% "
+"0","  group_by(BFS,VORLAGE_NAME) %>% "
+"0","  summarize(ja_anteil=round(sum(JA_STIMMEN_ABSOLUT,na.rm=T)/sum(JA_STIMMEN_ABSOLUT+NEIN_STIMMEN_ABSOLUT,na.rm=T)*100,1))"

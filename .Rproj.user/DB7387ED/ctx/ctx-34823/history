@@ -1,0 +1,253 @@
+shiny::runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+shiny::runApp()
+shiny::runApp()
+shiny::runApp()
+shiny::runApp()
+runApp()
+shiny::runApp()
+shiny::runApp()
+if (!require(pacman)) install.packages(pacman)
+pacman::p_load(sf,tidyverse,ggrepel,statR)
+library(tidyverse)
+# library(purrr)
+# get json via webservice
+data <- jsonlite::fromJSON("http://www.wahlen.zh.ch/abstimmungen/2016_09_25/viewer_download.php")
+# transform nested list into dataframe
+data <- data %>%
+map_dfr(bind_rows) %>%
+unnest(VORLAGEN)
+# install.packages("ggridges")
+data$VORLAGE_NAME <- factor(data$VORLAGE_NAME, labels = c("Grüne Wirtschaft", "AHV Plus", "NDG", "Bezahlbare Kinderbetreuung"))
+data <-data %>% mutate_at(vars(JA_STIMMEN_ABSOLUT,NEIN_STIMMEN_ABSOLUT,JA_PROZENT,STIMMBETEILIGUNG),as.numeric)
+#aggregiere auf Gemeindeebene
+data <-data %>%
+group_by(BFS,VORLAGE_NAME) %>%
+summarize(ja_anteil=round(sum(JA_STIMMEN_ABSOLUT,na.rm=T)/sum(JA_STIMMEN_ABSOLUT+NEIN_STIMMEN_ABSOLUT,na.rm=T)*100,1))
+# get shapefile from here
+# http://www.web.statistik.zh.ch/cms_basiskarten/gen_Gemeinde_2018/GEN_A4_GEMEINDEN_SEEN_2018_F.zip
+#Gemeindeshapes
+gemeinden<- sf::read_sf("GEN_A4_GEMEINDEN_SEEN_2018_F", stringsAsFactors = FALSE)
+#join municipality-infos to points
+mapdata <- left_join(data,gemeinden, by=c("BFS"))
+map <- ggplot(mapdata)+
+geom_sf(aes(fill=ja_anteil))+
+facet_wrap(~VORLAGE_NAME)
+subplot(nrows = 2,
+ggplot(mapdata) + geom_sf(),
+plot_ly(mapdata),
+plot_geo(mapdata),
+plot_mapbox(mapdata)
+) %>% hide_legend()
+plotly::subplot(nrows = 2,
+ggplot(mapdata) + geom_sf(),
+plot_ly(mapdata),
+plot_geo(mapdata),
+plot_mapbox(mapdata)
+) %>% hide_legend()
+plot_ly(mapdata)
+library(plotly)
+plot_ly(mapdata)
+plot_ly(
+mapdata,
+split = ~VORLAGE_NAME,
+color = ~SHAPE_AREA,
+alpha = 1,
+showlegend = FALSE
+)
+plot_ly(mapdata)
+plot_ly(
+franconia,
+split = ~NUTS_ID,
+color = ~district,
+stroke = I("black"),
+text = ~paste(NAME_ASCI, "\n is in", district),
+hoverinfo = "text",
+hoveron = "fill"
+)
+data(franconia, package = "mapview")
+plot_ly(
+franconia,
+split = ~NUTS_ID,
+color = ~district,
+stroke = I("black"),
+text = ~paste(NAME_ASCI, "\n is in", district),
+hoverinfo = "text",
+hoveron = "fill"
+)
+mapview(data)
+mapview::mapview(data)
+mapview::mapview(mapdata)
+mapview::mapview(mapdata)
+mapview::mapview(mapdata[1])
+#Labels - Kurzbezeichnung
+mapdata <- inner_join(gemeinden,data, by=c("BFS"))
+mapnew <- ggplot(mapdata)+
+geom_sf(aes(fill=ja_anteil),color="white")+
+facet_wrap(~VORLAGE_NAME)+
+coord_sf(datum = NA)+
+labs(fill="Ja (in %)")+
+theme_void()+
+scale_fill_gradient2(midpoint=50)+
+guides(fill = guide_colourbar(barwidth = 0.5, barheight = 10))
+mapview::mapview(mapdata[1])
+mapview::mapview(mapdata)
+mapview::mapview(mapdata) %>% addLogo(m, "https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata) %>% mapview::addLogo(m, "https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata) %>% mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft")) %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+zcol = "ja_anteil",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+unique(mapdata$VORLAGE_NAME)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"))
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"), zcol = "ja_anteil",) %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"), zcol = "ja_anteil") %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"), zcol = "ja_anteil", at = seq(0, 100,25), legend = TRUE)) %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"), zcol = "ja_anteil", at = seq(0, 100,25), legend = TRUE) %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+mapview::mapview(mapdata %>% filter(VORLAGE_NAME=="Grüne Wirtschaft"), zcol = "ja_anteil", at = seq(0, 100,5), legend = TRUE) %>%
+mapview::addLogo("https://jeroenooms.github.io/images/banana.gif",
+position = "bottomleft",
+offset.x = 5,
+offset.y = 40,
+width = 100,
+height = 100)
+shiny::runApp()
+shiny::runApp()
+runApp()
+shiny::runApp()
+runApp()
+runApp()
+shiny::runApp()
+runApp()
+shiny::runApp()
+runApp()
+runApp()
+runApp()
+library(shiny)
+library(jsonlite)
+library(tidyverse)
+library(sf)
+library(Cairo)
+library(shinythemes)
+library(mapview)
+urls <- jsonlite::fromJSON("https://opendata.swiss/api/3/action/package_show?id=echtzeitdaten-am-abstimmungstag")
+datevote <- substr(urls$result$resources$download_url,38,47)
+runApp()
+runApp()
+shiny::runApp()
+runApp()
